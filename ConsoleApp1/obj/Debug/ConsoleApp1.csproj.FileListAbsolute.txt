@@ -1,0 +1,5 @@
+C:\Users\Norman\Desktop\promovil_rest\ConsoleApp1\bin\Debug\ConsoleApp1.exe.config
+C:\Users\Norman\Desktop\promovil_rest\ConsoleApp1\bin\Debug\ConsoleApp1.exe
+C:\Users\Norman\Desktop\promovil_rest\ConsoleApp1\bin\Debug\ConsoleApp1.pdb
+C:\Users\Norman\Desktop\promovil_rest\ConsoleApp1\obj\Debug\ConsoleApp1.exe
+C:\Users\Norman\Desktop\promovil_rest\ConsoleApp1\obj\Debug\ConsoleApp1.pdb

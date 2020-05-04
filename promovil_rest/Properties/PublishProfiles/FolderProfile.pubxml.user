@@ -6,7 +6,7 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\Norman\Desktop\ws</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\Norman\Desktop\webservices\promovil</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="app.manifest">
@@ -76,10 +76,10 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>02/18/2018 09:44:54</publishTime>
     </File>
     <File Include="bin/promovil_rest.dll">
-      <publishTime>12/27/2019 12:09:57</publishTime>
+      <publishTime>03/26/2020 17:31:28</publishTime>
     </File>
     <File Include="bin/promovil_rest.pdb">
-      <publishTime>12/27/2019 12:09:57</publishTime>
+      <publishTime>03/26/2020 17:31:28</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>05/24/2018 14:38:22</publishTime>
@@ -232,7 +232,7 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>09/09/2019 13:42:28</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/27/2019 11:57:20</publishTime>
+      <publishTime>03/19/2020 17:10:01</publishTime>
     </File>
   </ItemGroup>
 </Project>

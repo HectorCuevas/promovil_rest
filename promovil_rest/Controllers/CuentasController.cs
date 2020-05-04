@@ -35,9 +35,9 @@ namespace promovil_rest.Controllers
         }
 
         // GET: api/Cuentas/5
-        [Route("api/Cuentas/{id}/{id2}/{id3}")]
+        [Route("api/Cuentas/{id}/{id2}/{id3}/{id4}")]
         [ResponseType(typeof(Cuenta))]
-        public int GetClientes(String id, String id2, string id3)
+        public int GetClientes(String id, String id2, string id3, string id4)
         {
             
 
@@ -48,6 +48,7 @@ namespace promovil_rest.Controllers
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@cliente", SqlDbType.VarChar).Value = id2.ToString();
+                    cmd.Parameters.Add("@sucursal", SqlDbType.VarChar).Value = id4.ToString();
                     if (con.State != ConnectionState.Open)
                     {
                         con.Open();
@@ -86,9 +87,9 @@ namespace promovil_rest.Controllers
             return res;
         }
 
-        [Route("api/Cuentas/{id}")]
+        [Route("api/Cuentas/{id}/{id2}")]
         [ResponseType(typeof(Cuenta))]
-        public DataSet GetCuentas(String id)
+        public DataSet GetCuentas(String id, string id2)
         {
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["promovil_rest.Properties.Settings.Conexion"].ConnectionString))
             {
@@ -96,6 +97,7 @@ namespace promovil_rest.Controllers
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("@cliente", SqlDbType.VarChar).Value = id.ToString();
+                    cmd.Parameters.Add("@sucursal", SqlDbType.VarChar).Value = id2.ToString();
                     if (con.State != ConnectionState.Open)
                     {
                         con.Open();

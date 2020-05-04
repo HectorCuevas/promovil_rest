@@ -56,7 +56,7 @@ namespace promovil_rest.Controllers
                              "Codigo cliente: " + carrito.codigo_cliente + System.Environment.NewLine +
                              "Codigo vendedor: " + carrito.cod_vendedor + System.Environment.NewLine +
                              "Fecha: " + fecha;
-                String to = "mguzman@prosisco.com.gt";
+                String to = "bodega.sl@corsenesa.com";
                  string path = "C:\\Pedidos\\" + cliente + fecha + ".pdf";
                 //string path = "C:\\Users\\Norman\\Documents\\Cotizaciones\\" + cliente + fecha + ".pdf";
                 pdf = new BodegaPDF();

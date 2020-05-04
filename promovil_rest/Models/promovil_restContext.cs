@@ -40,5 +40,7 @@ namespace promovil_rest.Models
         public System.Data.Entity.DbSet<promovil_rest.Models.Items> Items { get; set; }
 
         public System.Data.Entity.DbSet<promovil_rest.Models.Ubicaciones> Ubicaciones { get; set; }
+
+        public System.Data.Entity.DbSet<promovil_rest.Models.Correlativo> Correlativoes { get; set; }
     }
 }
