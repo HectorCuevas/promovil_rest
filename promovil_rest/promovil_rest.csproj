@@ -167,6 +167,7 @@
     <Compile Include="Models\Pedidos.cs" />
     <Compile Include="Models\Producto.cs" />
     <Compile Include="Models\Productos.cs" />
+    <Compile Include="Models\ProductosFilter.cs" />
     <Compile Include="Models\promovil_restContext.cs" />
     <Compile Include="Models\Responses\CustomersResponse.cs" />
     <Compile Include="Models\Ubicacion.cs" />

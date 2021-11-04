@@ -18,11 +18,6 @@ namespace promovil_rest.Controllers
     {
         private promovil_restContext db = new promovil_restContext();
 
-        // GET: api/Productos
-        public IQueryable<Productos> GetProductos()
-        {
-            return db.Productos;
-        }
 
         // GET: api/Productos/5
         [Route("api/Productos/{id}/{id2}")]
@@ -54,23 +49,26 @@ namespace promovil_rest.Controllers
             }
             return ds;
         }
-       /* // GET: api/Productos/5
-        [Route("api/EstadoCuenta/{id}")]
-        public DataSet GetEstadoCuenta(String cliente)
+
+
+        [HttpPost]
+        [ResponseType(typeof(ProductosFilter))]
+        public DataSet PostUbicaciones(ProductosFilter productosFilter)
         {
-            DataSet ds = new DataSet("EstadoCuenta");
+            DataSet ds = new DataSet("productos");
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["promovil_rest.Properties.Settings.Conexion"].ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("sp_select_estado_cuenta", con))
+                using (SqlCommand cmd = new SqlCommand("[sp_select_productos2]", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@cliente", SqlDbType.VarChar).Value = cliente.ToString();
+                    cmd.Parameters.Add("@co_ven", SqlDbType.VarChar).Value = productosFilter.co_ven;
+                    cmd.Parameters.Add("@filtro", SqlDbType.VarChar).Value = productosFilter.filtro;
                     if (con.State != ConnectionState.Open)
                     {
                         con.Open();
                     }
                     SqlDataAdapter adp = new SqlDataAdapter();
-                    //       adp.TableMappings.Add("Table", "EstadoCuenta");
+                    adp.TableMappings.Add("Table", "productos");
                     adp.SelectCommand = cmd;
                     adp.Fill(ds);
 
@@ -80,87 +78,38 @@ namespace promovil_rest.Controllers
                     }
                 }
             }
-             return ds;
-        }*/
-
-        // PUT: api/Productos/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutProductos(int id, Productos productos)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != productos.id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(productos).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductosExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            return ds;
         }
 
-        // POST: api/Productos
-        [ResponseType(typeof(Productos))]
-        public IHttpActionResult PostProductos(Productos productos)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        /* // GET: api/Productos/5
+         [Route("api/EstadoCuenta/{id}")]
+         public DataSet GetEstadoCuenta(String cliente)
+         {
+             DataSet ds = new DataSet("EstadoCuenta");
+             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["promovil_rest.Properties.Settings.Conexion"].ConnectionString))
+             {
+                 using (SqlCommand cmd = new SqlCommand("sp_select_estado_cuenta", con))
+                 {
+                     cmd.CommandType = CommandType.StoredProcedure;
+                     cmd.Parameters.Add("@cliente", SqlDbType.VarChar).Value = cliente.ToString();
+                     if (con.State != ConnectionState.Open)
+                     {
+                         con.Open();
+                     }
+                     SqlDataAdapter adp = new SqlDataAdapter();
+                     //       adp.TableMappings.Add("Table", "EstadoCuenta");
+                     adp.SelectCommand = cmd;
+                     adp.Fill(ds);
 
-            db.Productos.Add(productos);
-            db.SaveChanges();
+                     if (con.State == ConnectionState.Open)
+                     {
+                         con.Close();
+                     }
+                 }
+             }
+              return ds;
+         }*/
 
-            return CreatedAtRoute("DefaultApi", new { id = productos.id }, productos);
-        }
-
-        // DELETE: api/Productos/5
-        [ResponseType(typeof(Productos))]
-        public IHttpActionResult DeleteProductos(int id)
-        {
-            Productos productos = db.Productos.Find(id);
-            if (productos == null)
-            {
-                return NotFound();
-            }
-
-            db.Productos.Remove(productos);
-            db.SaveChanges();
-
-            return Ok(productos);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool ProductosExists(int id)
-        {
-            return db.Productos.Count(e => e.id == id) > 0;
-        }
+       
     }
 }

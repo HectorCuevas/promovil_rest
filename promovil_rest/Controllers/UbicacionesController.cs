@@ -96,7 +96,8 @@ namespace promovil_rest.Controllers
             int retRecord = 0;
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["promovil_rest.Properties.Settings.Conexion"].ConnectionString))
             {
-                foreach (Ubicacion ubicacion in ubicaciones.ubicaciones) {
+                foreach (Ubicacion ubicacion in ubicaciones.ubicaciones)
+                {
                     using (SqlCommand cmd = new SqlCommand("sp_insert_ubicacion", con))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -114,7 +115,7 @@ namespace promovil_rest.Controllers
                         retRecord = cmd.ExecuteNonQuery();
                     }
                 }
-               
+
             }
             return retRecord;
         }

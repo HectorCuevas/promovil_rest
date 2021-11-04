@@ -26,8 +26,8 @@ namespace promovil_rest.Controllers
         }
 
         // GET: api/Comentarios/5
-        [Route("api/Comentarios/{id}")]
-        public DataSet GetComentario(String id)
+        [Route("api/Comentarios/{id_cli}/{id_ven}")]
+        public DataSet GetComentario(String id_cli, String id_ven)
         {
             DataSet ds = new DataSet("comentarios");
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["promovil_rest.Properties.Settings.Conexion"].ConnectionString))
@@ -35,7 +35,8 @@ namespace promovil_rest.Controllers
                 using (SqlCommand cmd = new SqlCommand("sp_select_comentarios", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@co_cli", SqlDbType.VarChar).Value = id;
+                    cmd.Parameters.Add("@co_cli", SqlDbType.VarChar).Value = id_cli;
+                    cmd.Parameters.Add("@co_ven", SqlDbType.VarChar).Value = id_ven;
                     if (con.State != ConnectionState.Open)
                     {
                         con.Open();

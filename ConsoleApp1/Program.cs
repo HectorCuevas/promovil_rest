@@ -16,19 +16,19 @@ namespace ConsoleApp1
             try
             {
                 MailMessage mail = new MailMessage();
-                SmtpClient SmtpServer = new SmtpClient("smtp-mail.outlook.com");
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
 
 
-                mail.From = new MailAddress("normandaniel.galileo@outlook.com");
-                mail.To.Add("norman.vicenteo@gmail.com");
-                mail.Subject = "Cotización";
+                mail.From = new MailAddress("norman.vicenteo@gmail.com");
+                mail.To.Add("mguzman@prosisco.com.gt");
+                mail.Subject = "Estado de cuenta ";
                 mail.Body = "ESTE ES UN MENSAJE";
 
                
 
                 SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("normandaniel.galileo@outlook.com", "G3n3sys2017");
+                SmtpServer.Credentials = new System.Net.NetworkCredential("norman.vicenteo@gmail.com", "0");
                 SmtpServer.EnableSsl = true;
 
 

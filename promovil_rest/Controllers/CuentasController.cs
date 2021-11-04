@@ -39,7 +39,11 @@ namespace promovil_rest.Controllers
         [ResponseType(typeof(Cuenta))]
         public int GetClientes(String id, String id2, string id3, string id4)
         {
-            
+            //id=email
+            //id2=cliente
+            //id3=es email?
+            //id4=sucursal
+
 
             int res = 0;
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["promovil_rest.Properties.Settings.Conexion"].ConnectionString))
@@ -210,7 +214,7 @@ namespace promovil_rest.Controllers
                 mail.Attachments.Add(attachment);
 
                 SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("info@corsenesa.com", "prueba2019");
+                SmtpServer.Credentials = new System.Net.NetworkCredential("info@corsenesa.com", "laboratorio");
                 SmtpServer.EnableSsl = true;
 
                 SmtpServer.Send(mail);
