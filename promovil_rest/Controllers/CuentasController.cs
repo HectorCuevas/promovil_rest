@@ -23,7 +23,6 @@ namespace promovil_rest.Controllers
         private String json;
         private DataSet ds = new DataSet("cuentas");
         private GeneratePDF pdf;
-        private string BODY = "Se envía estado de cuenta del periodo: ";
         private MailMessage mail = new MailMessage();
         private SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
         private promovil_restContext db = new promovil_restContext();
@@ -34,7 +33,7 @@ namespace promovil_rest.Controllers
             return db.Cuentas;
         }
 
-        // GET: api/Cuentas/5
+        // GET: api/Cuentas/5 para enviar el estado de cuenta
         [Route("api/Cuentas/{id}/{id2}/{id3}/{id4}")]
         [ResponseType(typeof(Cuenta))]
         public int GetClientes(String id, String id2, string id3, string id4)
@@ -73,17 +72,26 @@ namespace promovil_rest.Controllers
             {
                 if (id3 == "1")
                 {
-                
+                    string empresa = SetEmpresa(id4);
                     string fecha = DateTime.Now.ToString("yyyy-MM-dd");
                     list = datasetToJson(ds);
+                    string nombreCliente = list[0].NombreCliente.ToString();
                     string cliente = list[0].Cliente.ToString();
                     pdf = new GeneratePDF();
-                
-                   string path = "C:\\Estados de cuenta\\" + cliente + fecha + ".pdf";
-                   // string path = "C:\\Users\\Norman\\Documents\\Cotizaciones\\" + cliente + fecha + ".pdf";
 
-                    pdf.ManipulatePdf(path, list);                      
-                    email(BODY + fecha, path, id, cliente);
+                    //string path = "C:\\Estados de cuenta\\reporte.pdf";
+                    string path = "C:\\Estados de cuenta\\" + cliente + fecha + ".pdf";
+                    // string path = "C:\\Users\\Norman\\Documents\\Cotizaciones\\" + cliente + fecha + ".pdf";
+
+                    //  pdf.ManipulatePdf(path, list);
+
+                    pdf.GeneratePDFusingReportViewer(ds.Tables["cuentas"], path);
+
+                    //string body = "Adjuntamos estado de cuenta de " + empresa + " al cliente: " + nombreCliente;
+                    string body = "Adjuntamos estado de cuenta de Tecnotools  al cliente: " + nombreCliente;
+
+
+                    email(body, path, id, cliente, nombreCliente);
                 }
                 res = 1;
 
@@ -91,6 +99,20 @@ namespace promovil_rest.Controllers
             return res;
         }
 
+        private string SetEmpresa(string codEmpresa)
+        {
+            if (codEmpresa.Equals("ALTE"))
+            {
+                return "Alta Tecnologia";
+            }
+            else
+            {
+                return "SL";
+            }
+        }
+
+
+        //para ver si tiene saldo pendiente
         [Route("api/Cuentas/{id}/{id2}")]
         [ResponseType(typeof(Cuenta))]
         public DataSet GetCuentas(String id, string id2)
@@ -200,12 +222,13 @@ namespace promovil_rest.Controllers
         {
             return db.Cuentas.Count(e => e.id == id) > 0;
         }
-        private void email(String body, String path, string email, string cliente)
+        private void email(String body, String path, string email, string cliente, string nombreCliente)
         {           
             try {
-                mail.From = new MailAddress("info@corsenesa.com");
+                // mail.From = new MailAddress("info@corsenesa.com");
+                mail.From = new MailAddress("norman.vicenteo@gmail.com");
                 mail.To.Add(email);
-                mail.Subject = "Estado de cuenta "+ cliente;
+                mail.Subject = "Estado de cuenta de "+ nombreCliente;
                 mail.Body = body;
 
 
@@ -214,7 +237,8 @@ namespace promovil_rest.Controllers
                 mail.Attachments.Add(attachment);
 
                 SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("info@corsenesa.com", "laboratorio");
+                SmtpServer.Credentials = new System.Net.NetworkCredential("norman.vicenteo@gmail.com", "kiirriukkmrxishq");
+                //SmtpServer.Credentials = new System.Net.NetworkCredential("info@corsenesa.com", "laboratorio");
                 SmtpServer.EnableSsl = true;
 
                 SmtpServer.Send(mail);
