@@ -54,70 +54,34 @@ namespace promovil_rest.Controllers
             return ds;
         }
 
-        // PUT: api/Customers/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutClientes(int id, Clientes clientes)
+        [HttpPost]
+        [ResponseType(typeof(CustomersFilter))]
+        public DataSet PostClientes(CustomersFilter productosFilter)
         {
-            if (!ModelState.IsValid)
+            DataSet ds = new DataSet("customers");
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["promovil_rest.Properties.Settings.Conexion"].ConnectionString))
             {
-                return BadRequest(ModelState);
-            }
-
-            if (id != clientes.id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(clientes).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClientesExists(id))
+                using (SqlCommand cmd = new SqlCommand("[sp_select_clientes]", con))
                 {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@co_vendedor", SqlDbType.VarChar).Value = productosFilter.co_ven;
+                    cmd.Parameters.Add("@filtro", SqlDbType.VarChar).Value = productosFilter.filtro;
+                    if (con.State != ConnectionState.Open)
+                    {
+                        con.Open();
+                    }
+                    SqlDataAdapter adp = new SqlDataAdapter();
+                    adp.TableMappings.Add("Table", "Customers");
+                    adp.SelectCommand = cmd;
+                    adp.Fill(ds);
+
+                    if (con.State == ConnectionState.Open)
+                    {
+                        con.Close();
+                    }
                 }
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/Customers
-        [ResponseType(typeof(Clientes))]
-        public IHttpActionResult PostClientes(Clientes clientes)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Clientes.Add(clientes);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = clientes.id }, clientes);
-        }
-
-        // DELETE: api/Customers/5
-        [ResponseType(typeof(Clientes))]
-        public IHttpActionResult DeleteClientes(int id)
-        {
-            Clientes clientes = db.Clientes.Find(id);
-            if (clientes == null)
-            {
-                return NotFound();
-            }
-
-            db.Clientes.Remove(clientes);
-            db.SaveChanges();
-
-            return Ok(clientes);
+            return ds;
         }
 
         protected override void Dispose(bool disposing)

@@ -15,6 +15,8 @@ namespace promovil_rest.Models
         public String codigo_cliente { get; set; }
         public String codigo_vendedor { get; set; }
         public String motivo { get; set; }
+        public String comentario { get; set; }
+        public string usuario { get; set; }
 
         public override string ToString()
         {

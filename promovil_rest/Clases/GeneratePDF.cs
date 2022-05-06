@@ -3,6 +3,7 @@ using iText.Kernel.Colors;
 using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
+using System.Threading.Tasks;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
@@ -10,6 +11,9 @@ using promovil_rest.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Build.Tasks;
+using Microsoft.Reporting.WebForms;
+using System.Data;
 
 namespace promovil_rest.Clases
 {
@@ -17,6 +21,35 @@ namespace promovil_rest.Clases
     {
 
 
+        public void GeneratePDFusingReportViewer(DataTable estado, string reportName)
+        {
+
+            //DataTable dtCuentas = estado.Tables["cuentas"];
+            string deviceInfo = "";
+            string[] streamIds;
+            Microsoft.Reporting.WebForms.Warning[] warnings;
+
+            string mimeType = string.Empty;
+            string encoding = string.Empty;
+            string extension = string.Empty;
+
+            ReportViewer viewer = new Microsoft.Reporting.WebForms.ReportViewer();
+            viewer.ProcessingMode = ProcessingMode.Local;
+            viewer.LocalReport.ReportEmbeddedResource = "promovil_rest.corsenesaReporte.rdlc";
+
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("DSCorsenesa", estado));
+            //viewer.ReportRefresh();
+            var bytes = viewer.LocalReport.Render("PDF", deviceInfo, out mimeType, out encoding,
+
+                 out extension, out streamIds, out warnings
+                );
+
+           // string filename = "C:\\Estados de cuenta\\reporte.pdf";
+            File.WriteAllBytes(reportName, bytes);
+            System.Diagnostics.Process.Start(reportName);
+
+        }
+ 
 
         public void ManipulatePdf(String dest, List<EstadoCuenta> estado)
         {

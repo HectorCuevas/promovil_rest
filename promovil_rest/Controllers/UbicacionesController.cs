@@ -18,15 +18,9 @@ namespace promovil_rest.Controllers
     {
         private promovil_restContext db = new promovil_restContext();
 
-        // GET: api/Ubicaciones
-        public IQueryable<Ubicaciones> GetUbicaciones()
-        {
-            return db.Ubicaciones;
-        }
-
         // GET: api/Ubicaciones/5
-        [Route("api/Ubicaciones/{id}")]
-        public DataSet GetUbicaciones(String id)
+        [Route("api/Ubicaciones/{co_ven}/{co_cli}")]
+        public DataSet GetUbicaciones(String co_ven, string co_cli)
         {
             DataSet ds = new DataSet("Ubicaciones");
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["promovil_rest.Properties.Settings.Conexion"].ConnectionString))
@@ -34,7 +28,8 @@ namespace promovil_rest.Controllers
                 using (SqlCommand cmd = new SqlCommand("sp_select_visitas", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@co_cli", SqlDbType.VarChar).Value = id;
+                    cmd.Parameters.Add("@co_cli", SqlDbType.VarChar).Value = co_cli;
+                    cmd.Parameters.Add("@co_ven", SqlDbType.VarChar).Value = co_ven;
                     if (con.State != ConnectionState.Open)
                     {
                         con.Open();
@@ -51,41 +46,6 @@ namespace promovil_rest.Controllers
                 }
             }
             return ds;
-        }
-
-        // PUT: api/Ubicaciones/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutUbicaciones(int id, Ubicaciones ubicaciones)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != ubicaciones.id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(ubicaciones).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UbicacionesExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Ubicaciones
@@ -108,6 +68,8 @@ namespace promovil_rest.Controllers
                         cmd.Parameters.Add("codigo_cliente", SqlDbType.VarChar).Value = ubicacion.codigo_cliente;
                         cmd.Parameters.Add("codigo_vendedor", SqlDbType.VarChar).Value = ubicacion.codigo_vendedor;
                         cmd.Parameters.Add("motivo", SqlDbType.VarChar).Value = ubicacion.motivo;
+                        cmd.Parameters.Add("comentario", SqlDbType.VarChar).Value = ubicacion.comentario;
+                        cmd.Parameters.Add("usuario", SqlDbType.VarChar).Value = ubicacion.usuario;
                         if (con.State != ConnectionState.Open)
                         {
                             con.Open();
@@ -118,22 +80,6 @@ namespace promovil_rest.Controllers
 
             }
             return retRecord;
-        }
-
-        // DELETE: api/Ubicaciones/5
-        [ResponseType(typeof(Ubicaciones))]
-        public IHttpActionResult DeleteUbicaciones(int id)
-        {
-            Ubicaciones ubicaciones = db.Ubicaciones.Find(id);
-            if (ubicaciones == null)
-            {
-                return NotFound();
-            }
-
-            db.Ubicaciones.Remove(ubicaciones);
-            db.SaveChanges();
-
-            return Ok(ubicaciones);
         }
 
         protected override void Dispose(bool disposing)
