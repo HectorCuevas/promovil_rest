@@ -36,6 +36,7 @@ namespace promovil_rest.Clases
             ReportViewer viewer = new Microsoft.Reporting.WebForms.ReportViewer();
             viewer.ProcessingMode = ProcessingMode.Local;
             viewer.LocalReport.ReportEmbeddedResource = "promovil_rest.corsenesaReporte.rdlc";
+           
 
             viewer.LocalReport.DataSources.Add(new ReportDataSource("DSCorsenesa", estado));
             //viewer.ReportRefresh();

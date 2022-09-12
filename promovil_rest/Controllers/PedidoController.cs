@@ -44,9 +44,10 @@ namespace promovil_rest.Controllers
                     cmd.Parameters.Add("@pDEPATAMENTO", SqlDbType.VarChar).Value = pedido.departamento;
                     cmd.Parameters.Add("@pMUNICIPIO", SqlDbType.VarChar).Value = pedido.municipio;
                     cmd.Parameters.Add("@pZONA", SqlDbType.TinyInt).Value = pedido.zona;
+                    cmd.Parameters.Add("@pSUCU", SqlDbType.VarChar).Value = pedido.sucursal;
                     if (con.State != ConnectionState.Open)
                     {
-                        con.Open();
+                        con.Open(); 
                     }
                     retRecord = cmd.ExecuteNonQuery();
                     if(retRecord == 1)

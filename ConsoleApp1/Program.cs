@@ -19,7 +19,7 @@ namespace ConsoleApp1
 
                 GeneratePDF generatePDF = new GeneratePDF();
 
-                DataTable dt = GetCuentas("100");
+                DataTable dt = GetCuentas("1020");
 
                 generatePDF.GeneratePDFusingReportViewer(dt, "C:\\Estados de cuenta\\reporte.pdf");
 
@@ -27,7 +27,7 @@ namespace ConsoleApp1
 
                 mail.From = new MailAddress("norman.vicenteo@gmail.com");
                 //mail.From = new MailAddress("info@corsenesa.com");
-                 mail.To.Add("nvicente@prosisco.com.gt");
+                mail.To.Add("nvicente@prosisco.com.gt");
                // mail.To.Add("norman.vicenteo@gmail.com");
                 mail.Subject = "Estado de cuenta (PRUEBA) ";
                 mail.Body = "ESTE ES UN MENSAJE DE PRUEBA";
@@ -36,7 +36,7 @@ namespace ConsoleApp1
 
                 SmtpServer.Port = 587;
                 SmtpServer.Credentials = new System.Net.NetworkCredential("norman.vicenteo@gmail.com", "kiirriukkmrxishq");
-             //   SmtpServer.Credentials = new System.Net.NetworkCredential("info@corsenesa.com", "laboratorio");
+               // SmtpServer.Credentials = new System.Net.NetworkCredential("info@corsenesa.com", "gvzepxksatmptfhv");
                 SmtpServer.EnableSsl = true;
 
 

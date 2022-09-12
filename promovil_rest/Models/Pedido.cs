@@ -28,6 +28,7 @@ namespace promovil_rest.Models
         public string departamento { get; set; }
         public string municipio { get; set; }
         public byte zona { get; set; }
+        public String sucursal { get; set; }
 
         [JsonProperty(PropertyName = "pedidos")]
         public List<DetallePedido> detalles { get; set; }

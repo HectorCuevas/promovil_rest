@@ -87,8 +87,7 @@ namespace promovil_rest.Controllers
 
                     pdf.GeneratePDFusingReportViewer(ds.Tables["cuentas"], path);
 
-                    //string body = "Adjuntamos estado de cuenta de " + empresa + " al cliente: " + nombreCliente;
-                    string body = "Adjuntamos estado de cuenta de Tecnotools  al cliente: " + nombreCliente;
+                    string body = "Adjuntamos estado de cuenta de " + empresa + " al cliente: " + nombreCliente;
 
 
                     email(body, path, id, cliente, nombreCliente);
@@ -101,7 +100,7 @@ namespace promovil_rest.Controllers
 
         private string SetEmpresa(string codEmpresa)
         {
-            if (codEmpresa.Equals("ALTE"))
+            if (codEmpresa.Trim().Equals("ALTE"))
             {
                 return "Alta Tecnologia";
             }
@@ -226,7 +225,7 @@ namespace promovil_rest.Controllers
         {           
             try {
                 // mail.From = new MailAddress("info@corsenesa.com");
-                mail.From = new MailAddress("norman.vicenteo@gmail.com");
+                mail.From = new MailAddress("info@corsenesa.com");
                 mail.To.Add(email);
                 mail.Subject = "Estado de cuenta de "+ nombreCliente;
                 mail.Body = body;
@@ -237,7 +236,7 @@ namespace promovil_rest.Controllers
                 mail.Attachments.Add(attachment);
 
                 SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("norman.vicenteo@gmail.com", "kiirriukkmrxishq");
+                SmtpServer.Credentials = new System.Net.NetworkCredential("info@corsenesa.com", "gvzepxksatmptfhv");
                 //SmtpServer.Credentials = new System.Net.NetworkCredential("info@corsenesa.com", "laboratorio");
                 SmtpServer.EnableSsl = true;
 
