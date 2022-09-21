@@ -10,12 +10,11 @@ namespace promovil_rest.Clases
 {
     public class Email
     {
-        private static String json;
+        public string body { get; set; }
+        public string subject { get; set; }
+        public string reportPath { get; set; }
+        public string to { get; set; }
+        public string from { get; set; }
 
-        public static String datasetToJson(DataSet ds) {
-            json = JsonConvert.SerializeObject(ds);
-            EstadoCuenta estadoCuenta = JsonConvert.DeserializeObject<EstadoCuenta>(json);
-            return json;
-        }
     }
 }

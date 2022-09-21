@@ -234,12 +234,15 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Clases\BodegaPDF.cs" />
+    <Compile Include="Clases\CotizacionHeader.cs" />
     <Compile Include="Clases\Email.cs" />
     <Compile Include="Clases\GeneratePDF.cs" />
+    <Compile Include="Clases\SendEmail.cs" />
     <Compile Include="Controllers\ChartsController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ComentariosController.cs" />
     <Compile Include="Controllers\CorrelativoController.cs" />
+    <Compile Include="Controllers\CotizacionController.cs" />
     <Compile Include="Controllers\CuentasController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DetallePedidoController.cs" />
@@ -251,6 +254,7 @@
     <Compile Include="Controllers\PedidoController.cs" />
     <Compile Include="Controllers\ProductosController.cs" />
     <Compile Include="Controllers\UbicacionesController.cs" />
+    <Compile Include="CotizacionManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -258,6 +262,7 @@
     <Compile Include="Models\Chart.cs" />
     <Compile Include="Models\Clientes.cs" />
     <Compile Include="Models\Comentario.cs" />
+    <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\Correlativo.cs" />
     <Compile Include="Models\Cuenta.cs" />
     <Compile Include="Models\Cuentas.cs" />
@@ -289,6 +294,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>testDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="TTOOLSDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TTOOLSDataSet.xsd</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.manifest" />
@@ -309,6 +319,17 @@
     <Content Include="testDataSet.xss">
       <DependentUpon>testDataSet.xsd</DependentUpon>
     </Content>
+    <Content Include="TTOOLSDataSet.xsc">
+      <DependentUpon>TTOOLSDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="TTOOLSDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TTOOLSDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="TTOOLSDataSet.xss">
+      <DependentUpon>TTOOLSDataSet.xsd</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -324,6 +345,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="corsenesaReporte.rdlc" />
+    <EmbeddedResource Include="Cotizacion1.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

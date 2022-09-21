@@ -85,7 +85,7 @@ namespace promovil_rest.Controllers
 
                     //  pdf.ManipulatePdf(path, list);
 
-                    pdf.GeneratePDFusingReportViewer(ds.Tables["cuentas"], path);
+                    pdf.GenerateACusingReportViewer(ds.Tables["cuentas"], path);
 
                     //string body = "Adjuntamos estado de cuenta de " + empresa + " al cliente: " + nombreCliente;
                     string body = "Adjuntamos estado de cuenta de Tecnotools  al cliente: " + nombreCliente;
@@ -114,7 +114,6 @@ namespace promovil_rest.Controllers
 
         //para ver si tiene saldo pendiente
         [Route("api/Cuentas/{id}/{id2}")]
-        [ResponseType(typeof(Cuenta))]
         public DataSet GetCuentas(String id, string id2)
         {
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["promovil_rest.Properties.Settings.Conexion"].ConnectionString))
@@ -265,7 +264,9 @@ namespace promovil_rest.Controllers
             json = JsonConvert.SerializeObject(ds);
             JObject cuentas = JObject.Parse(json);
             List<JToken> results = cuentas["cuentas"].Children().ToList();
+           
             List<EstadoCuenta> searchResults = new List<EstadoCuenta>();
+            
             foreach (JToken result in results)
             {
                 EstadoCuenta searchResult = result.ToObject<EstadoCuenta>();

@@ -21,7 +21,37 @@ namespace promovil_rest.Clases
     {
 
 
-        public void GeneratePDFusingReportViewer(DataTable estado, string reportName)
+        public void GeneratePDFusingReportViewer(DataTable estado,
+            DataTable detalle, string reportName)
+        {
+
+            //DataTable dtCuentas = estado.Tables["cuentas"];
+            string deviceInfo = "";
+            string[] streamIds;
+            Microsoft.Reporting.WebForms.Warning[] warnings;
+
+            string mimeType = string.Empty;
+            string encoding = string.Empty;
+            string extension = string.Empty;
+
+            ReportViewer viewer = new Microsoft.Reporting.WebForms.ReportViewer();
+            viewer.ProcessingMode = ProcessingMode.Local;
+            viewer.LocalReport.ReportEmbeddedResource = "promovil_rest.Cotizacion1.rdlc";
+
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("encabezado", estado));
+            viewer.LocalReport.DataSources.Add(new ReportDataSource("detalle", detalle));
+            //viewer.ReportRefresh();
+            var bytes = viewer.LocalReport.Render("PDF", deviceInfo, out mimeType, out encoding,
+
+                 out extension, out streamIds, out warnings
+                );
+
+           // string filename = "C:\\Estados de cuenta\\reporte.pdf";
+            File.WriteAllBytes(reportName, bytes);
+            System.Diagnostics.Process.Start(reportName);
+
+        }
+        public void GenerateACusingReportViewer(DataTable estado, string reportName)
         {
 
             //DataTable dtCuentas = estado.Tables["cuentas"];
@@ -44,12 +74,12 @@ namespace promovil_rest.Clases
                  out extension, out streamIds, out warnings
                 );
 
-           // string filename = "C:\\Estados de cuenta\\reporte.pdf";
+            // string filename = "C:\\Estados de cuenta\\reporte.pdf";
             File.WriteAllBytes(reportName, bytes);
             System.Diagnostics.Process.Start(reportName);
 
         }
- 
+
 
         public void ManipulatePdf(String dest, List<EstadoCuenta> estado)
         {

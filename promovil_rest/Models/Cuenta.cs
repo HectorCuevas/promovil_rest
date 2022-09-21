@@ -10,4 +10,10 @@ namespace promovil_rest.Models
         public int id { get; set; }
         public String cliente { get; set; }
     }
+
+    public class Cotizacion
+    {
+        public int id { get; set; }
+        public String numPedido { get; set; }
+    }
 }

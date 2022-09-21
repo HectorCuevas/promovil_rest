@@ -1,4 +1,5 @@
-﻿using promovil_rest.Models;
+﻿using promovil_rest.Clases;
+using promovil_rest.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -53,6 +54,13 @@ namespace promovil_rest.Controllers
                     {
                         retRecord = PostDetalles(pedido.detalles);
                     }
+
+                    Correlativo cr = new Correlativo();
+                    cr.tipo_doc = "Pedido";
+                    cr.co_sucu = "CENT";
+                    cr.accion = '0';
+
+                    GetCorrelativo(cr, pedido);
                     con.Close();
                 }
             }
@@ -91,7 +99,39 @@ namespace promovil_rest.Controllers
 
                 }
             }
+           // if (retRecord 1= 1)
+          //  {
+               
+          //  }
             return retRecord;
+        }
+
+        public void GetCorrelativo(Correlativo correlativo, Pedido email)
+        {
+            int res = 0;
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["promovil_rest.Properties.Settings.Conexion"].ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("sp_TPOS_CORRELATIVO", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("pTIPO_DOC", SqlDbType.VarChar).Value = correlativo.tipo_doc;
+                    cmd.Parameters.Add("pCO_SUCU", SqlDbType.VarChar).Value = correlativo.co_sucu;
+                    cmd.Parameters.Add("pAccion", SqlDbType.Char).Value = correlativo.accion;
+                    if (con.State != ConnectionState.Open)
+                    {
+                        con.Open();
+                    }
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        res = reader.GetInt32(0);
+
+                    }
+                }
+            }
+            //return res;
+
+            new CotizacionManager(res, email);
         }
     }
 }

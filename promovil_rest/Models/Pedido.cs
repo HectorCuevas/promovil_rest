@@ -32,5 +32,6 @@ namespace promovil_rest.Models
         [JsonProperty(PropertyName = "pedidos")]
         public List<DetallePedido> detalles { get; set; }
 
+        public string email { get; set; }
     }
 }
